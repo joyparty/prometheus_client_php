@@ -1,5 +1,5 @@
 {
-    "name": "endclothing/prometheus_client_php",
+    "name": "hsldymq/prometheus_client_php",
     "description": "Prometheus instrumentation library for PHP applications.",
     "type": "library",
     "license": "Apache-2.0",
@@ -13,7 +13,7 @@
         "jimdo/prometheus_client_php": "*"
     },
     "require": {
-        "php": "^7.3",
+        "php": "^7.0",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^6.3",
         "symfony/polyfill-apcu": "^1.6"
