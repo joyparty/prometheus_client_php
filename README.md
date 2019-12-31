@@ -51,7 +51,7 @@ $counterA = $registry->registerCounter('test', 'some_counter', 'it increases', [
 $counterA->incBy(3, ['blue']);
 
 // once a metric is registered, it can be retrieved using e.g. getCounter:
-$counterB = $registry->getCounter('test', 'some_counter')
+$counterB = $registry->getCounter('test', 'some_counter');
 $counterB->incBy(2, ['red']);
 ```
 
