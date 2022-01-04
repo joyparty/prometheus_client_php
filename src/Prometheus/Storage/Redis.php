@@ -122,9 +122,13 @@ class Redis implements Adapter
             return;
         }
 
-        $connectionStatus = $this->connectToServer();
-        if ($connectionStatus === false) {
-            throw new StorageException("Can't connect to Redis server", 0);
+        try {
+            $connectionStatus = $this->connectToServer();
+            if ($connectionStatus === false) {
+                throw new StorageException("Can't connect to Redis server", 0);
+            }
+        } catch (\RedisException $e) {
+            throw new StorageException("Can't connect to Redis server: {$e->getMessage()}", 0, $e);
         }
 
         if ($this->options['password']) {
@@ -143,19 +147,15 @@ class Redis implements Adapter
      */
     private function connectToServer(): bool
     {
-        try {
-            if ($this->options['persistent_connections']) {
-                return $this->redis->pconnect(
-                    $this->options['host'],
-                    $this->options['port'],
-                    $this->options['timeout']
-                );
-            }
-
-            return $this->redis->connect($this->options['host'], $this->options['port'], $this->options['timeout']);
-        } catch (\RedisException $e) {
-            return false;
+        if ($this->options['persistent_connections']) {
+            return $this->redis->pconnect(
+                $this->options['host'],
+                $this->options['port'],
+                $this->options['timeout']
+            );
         }
+
+        return $this->redis->connect($this->options['host'], $this->options['port'], $this->options['timeout']);
     }
 
     /**
